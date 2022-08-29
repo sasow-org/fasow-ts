@@ -10,11 +10,7 @@ export default function TemplateLayout(){
         <Box mt={2} paddingX={"15px"} maxHeight={"max-content"} height={"max-content"} style={{backgroundColor: "darkgray",
         }}>
             <Grid container spacing={1}>
-<<<<<<< HEAD
                 <Grid item xs={6} md={5} sm={12}>
-=======
-                <Grid item xs={6} md={6} sm={12}>
->>>>>>> main
                     <ExperimentInputCard/>
                 </Grid>
                 <Grid item xs={6} md={7} sm={12}>

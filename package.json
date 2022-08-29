@@ -1,6 +1,6 @@
 {
-  "name": "sasow-org.github.io",
-  "homepage": "https://sasow-org.github.io/sasow-ts/",
+  "name": "fasow-ts",
+  "homepage": "https://sasow-org.github.io/fasow-ts/",
   "version": "0.1.0",
   "dependencies": {
     "@emotion/react": "^11.9.0",

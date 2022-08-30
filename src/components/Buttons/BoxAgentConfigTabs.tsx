@@ -41,7 +41,7 @@ const TabPanel = (props: TabPanelProps) => {
         >
             {value === index && (
                 <Box sx={{ p: 3 }}>
-                    <Typography>{children}</Typography>
+                    {children}
                 </Box>
             )}
         </div>
@@ -55,28 +55,26 @@ const tabsController = (index: number) => {
     };
 }
 
-export default function BoxAgentConfigTabs(agentConfig){
+export default function BoxAgentConfigTabs(agentConfig) {
     //Todo read mode of config and only disable the not ! agent by Config
 
     console.log("In Start agent config from prop is: ", agentConfig)
     const configContext = useContext(ExperimentConfigContext);
     const [value, setValue] = React.useState(0);
 
-    const handleAddAgentConfig = () => {
-        console.log("Todo Add New Config.")
-        //todo handle to add to all configs list.
-
-
-        configContext.agentsConfigs.push()
-    }
-
 
     const handleChange = (event: React.SyntheticEvent, newValue: number) => {
         setValue(newValue);
     };
 
+    const handleAddAgentConfig = () => {
+        console.log("Todo Add New Config.")
+        //todo handle to add to all configs list.
+    }
+
+
     return (
-        <div>
+        <>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                 <Typography variant={'h5'} textAlign={"center"} marginY={'15px'}>
                     Agent Config
@@ -103,6 +101,6 @@ export default function BoxAgentConfigTabs(agentConfig){
                     </Button>
                 </div>
             </Grid>
-        </div>
+        </>
     );
 }

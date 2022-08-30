@@ -22,10 +22,7 @@ const style = {
 }
 
 export default function ModalNewAgentConfig() {
-
-    const [open, setOpen] = useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+    const configContext = useContext(ExperimentConfigContext);
 
     const agentConfig = {
         initialState: 0,
@@ -38,6 +35,10 @@ export default function ModalNewAgentConfig() {
         percentageAgent: 0
     }
 
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
+
     console.log("Agent Config on New Agent Config modal: ", agentConfig)
 
     return (
@@ -48,11 +49,11 @@ export default function ModalNewAgentConfig() {
             <Modal
                 open={open}
                 onClose={handleClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
+                aria-labelledby="parent-modal-title"
+                aria-describedby="parent-modal-description"
             >
                 <Box sx={style}>
-                    <BoxAgentConfigTabs/>
+                    <BoxAgentConfigTabs {...agentConfig}/>
                 </Box>
             </Modal>
         </div>

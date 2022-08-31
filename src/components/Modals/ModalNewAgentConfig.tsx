@@ -1,4 +1,4 @@
-import React, {useContext, useState} from "react";
+import React, {createContext, useContext, useState} from "react";
 import {Button, Grid, Modal} from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 import BoxAgentConfigTabs from "../Buttons/BoxAgentConfigTabs";
@@ -21,19 +21,23 @@ const style = {
     boxShadow: 24,
 }
 
-export default function ModalNewAgentConfig() {
-    const configContext = useContext(ExperimentConfigContext);
+const agentDefaultConfig = {
+    initialState: 0,
+    configName: "",
+    percentageFollowers: 0,
+    percentageFollowings: 0,
+    agentType: "TwitterAgent",
+    actions: [],
+    isSeed: false,
+    percentageAgent: 0
+}
 
-    const agentConfig = {
-        initialState: 0,
-        configName: "",
-        percentageFollowers: 0,
-        percentageFollowings: 0,
-        agentType: "",
-        actions: [],
-        isSeed: false,
-        percentageAgent: 0
-    }
+export const agentConfigContext = createContext(agentDefaultConfig);
+
+export default function ModalNewAgentConfig() {
+    //const configContext = useContext(ExperimentConfigContext);
+
+    const agentConfig = useContext(agentConfigContext);
 
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);

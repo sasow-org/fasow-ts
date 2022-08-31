@@ -59,12 +59,10 @@ export default function BoxAgentConfigTabs(agentConfig) {
     //Todo read mode of config and only disable the not ! agent by Config
 
     console.log("In Start agent config from prop is: ", agentConfig)
-    const configContext = useContext(ExperimentConfigContext);
-    const [value, setValue] = React.useState(0);
 
-
-    const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-        setValue(newValue);
+    const [auxIndexTab, setAuxIndexTab  ] = React.useState(0);
+    const handleChangeIndexTab = (event: React.SyntheticEvent, newValue: number) => {
+        setAuxIndexTab(newValue);
     };
 
     const handleAddAgentConfig = () => {
@@ -79,15 +77,15 @@ export default function BoxAgentConfigTabs(agentConfig) {
                 <Typography variant={'h5'} textAlign={"center"} marginY={'15px'}>
                     Agent Config
                 </Typography>
-                <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+                <Tabs value={auxIndexTab} onChange={handleChangeIndexTab} aria-label="basic tabs example">
                     <Tab label="Config" {...tabsController(0)} />
                     <Tab label="Actions Config" {...tabsController(1)} />
                 </Tabs>
             </Box>
-            <TabPanel value={value} index={0}>
+            <TabPanel value={auxIndexTab} index={0}>
                 <ConfigAgentPanel {...agentConfig} />
             </TabPanel>
-            <TabPanel value={value} index={1}>
+            <TabPanel value={auxIndexTab} index={1}>
                 <ActionsPanel {...agentConfig}/>
             </TabPanel>
             <Grid item xs={12}>

@@ -1,14 +1,17 @@
-import {Card, Grid, MenuItem, TextField} from "@mui/material";
+import {Card, Grid, MenuItem, Slider, TextField} from "@mui/material";
 import * as React from "react";
 import {useContext, useEffect, useState} from "react";
 import {ExperimentConfigContext} from "../../App";
 import Box from "@mui/material/Box";
+import {agentConfigContext} from "../Modals/ModalNewAgentConfig";
 
-export default function ConfigAgentPanel(agentConfig){
+export default function ConfigAgentPanel(agentConfig2){
 
     const experimentConfig = useContext(ExperimentConfigContext)
 
-    const stateConfig = useState(agentConfig);
+    const agentConfig = useContext(agentConfigContext)
+
+    const [stateConfig, setStateConfig] = useState(agentConfig);
 
     console.log("Experiment Config is : ", experimentConfig);
     console.log("AgentConfig in ConfigAgent Panel for new Agent is: ", agentConfig)
@@ -20,50 +23,82 @@ export default function ConfigAgentPanel(agentConfig){
     const typesArray = ['TwitterAgent', 'FacebookAgent']
     // Agent Type, remember this is for select the class was need to instantiate.
     const [selectedAgentType, setSelectedAgentType] = useState(agentConfig.agentType)//todo check this hardcoding
-
     //Function to handle the changes in the
     const handleChangeSelectAgentType = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSelectedAgentType(event.target.value)
+        //setStateConfig(stateConfig => ({
+        //    ...stateConfig,
+        //    ...event.target.value
+        //}));
         agentConfig.agentType = event.target.value;
     }
 
     useEffect(() => {
-        if(agentConfig.agentType === ""){
+        /*if(agentConfig.agentType === ""){
             if(experimentConfig.experimentType === "TwitterConfig"){
                 setSelectedAgentType('TwitterAgent');
             }else{//Si el modo es otra que no sea twitter (por ahora solo existe facebook)
                 setSelectedAgentType('FacebookAgent');
             }
         }
-    })
+
+         */
+    }, [])
 
     // Config Name
     const [configName, setConfigName] = useState(agentConfig.configName)
     const handleChangeConfigName = (event: React.ChangeEvent<HTMLInputElement>) => {
         console.log("Pre config ---> ", agentConfig)
+        console.log("State config --->", stateConfig)
+        console.log("Value --> ", event.target.value)
         setConfigName(event.target.value);
-        agentConfig.configName = event.target.value;
-        console.log("Post Config ---> ", agentConfig)
+        stateConfig.configName = event.target.value
+        console.log("ExperimentConfig Now is --------> ", experimentConfig)
+
+        //agentConfig.configName = event.target.value;
+        //console.log("Post Config ---> ", agentConfig)
     }
 
     // Initial State
     const [initialState, setInitialState] = useState(agentConfig.initialState)
     const handleChangeInitialState = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setInitialState(event.target.value);
+        //Todo esta parte se puede mejorar mostrando el nombre de la variable de estado, una cosa asi.
+        setInitialState(Number.parseInt(event.target.value));
+        agentConfig.initialState = Number.parseInt(event.target.value);
+        //todo resolver el problema de no introducir valores equivocados.
     }
 
     // Followers Percentage
+    const evaluateValue = (newValue) => {
+        if(newValue < 0.001 && newValue > 0 ){
+            return 0.001;
+        }else if(newValue > 100){
+            return 100;
+        }
+        return newValue;
+    }
     const [followersPercentage, setFollowersPercentage] = useState(agentConfig.percentageFollowers);
-    const handleChangeFollowersPercentage = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setFollowersPercentage(parseFloat(event.target.value))
-        agentConfig.percentageFollowers = parseFloat(event.target.value);
+    const sliderHandleChangeFollowersPercentage = (event: Event, auxValue: number | number[]) => {
+        const newValue : number = evaluateValue(auxValue);
+        setFollowersPercentage(newValue as number)
+        agentConfig.percentageFollowers = newValue as number;
+    }
+    const handleChangeFollowersPercentage = (event) => {
+        let newValue : number = evaluateValue(parseFloat(event.target.value));
+        setFollowersPercentage(newValue);
+        agentConfig.percentageFollowers = newValue;
     }
 
     // Followings Percentage
     const [followingsPercentage, setFollowingsPercentage] = useState(agentConfig.percentageFollowings);
+    const sliderHandleChangeFollowingsPercentage = (event: Event, newValue: number | number[]) => {
+        setFollowingsPercentage(newValue as number);
+        agentConfig.percentageFollowings = newValue as number
+    }
     const handleChangeFollowingsPercentage = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setFollowingsPercentage(parseFloat(event.target.value))
-        agentConfig.percentageFollowings = parseFloat(event.target.value);
+        const newValue : number = evaluateValue(parseFloat(event.target.value));
+        setFollowingsPercentage(newValue)
+        agentConfig.percentageFollowings = newValue;
     }
 
     return (
@@ -86,27 +121,60 @@ export default function ConfigAgentPanel(agentConfig){
                     value={initialState}
                     onChange={handleChangeInitialState}
                     variant={"outlined"}
+                    type={"number"}
                 />
             </Grid>
             <Grid item xs={12}>
-                <TextField
-                    fullWidth
-                    required
-                    label="Followers Percentage"
-                    value={followersPercentage}
-                    onChange={handleChangeFollowersPercentage}
-                    variant={"outlined"}
-                />
+                <Box>
+                    <Grid container spacing={2}>
+                        <Grid item xs={5}>
+                            <TextField
+                                fullWidth
+                                required
+                                label="Followers Percentage"
+                                value={followersPercentage}
+                                variant={"outlined"}
+                                onChange={handleChangeFollowersPercentage}
+                                type={"number"}
+                            />
+                        </Grid>
+                        <Grid item xs={7}>
+                            <Slider
+                                value={followersPercentage}
+                                onChange={sliderHandleChangeFollowersPercentage}
+                                step={0.0001}
+                                min={0}
+                                max={100}
+                            />
+                        </Grid>
+                    </Grid>
+                </Box>
             </Grid>
             <Grid item xs={12}>
-                <TextField
-                    fullWidth
-                    required
-                    label="Followings Percentage"
-                    value={followingsPercentage}
-                    onChange={handleChangeFollowingsPercentage}
-                    variant={"outlined"}
-                />
+                <Box>
+                    <Grid container spacing={2}>
+                        <Grid item xs={5}>
+                            <TextField
+                                fullWidth
+                                required
+                                label="Followings Percentage"
+                                value={followingsPercentage}
+                                onChange={handleChangeFollowingsPercentage}
+                                variant={"outlined"}
+                                type={"number"}
+                            />
+                        </Grid>
+                        <Grid item xs={7}>
+                            <Slider
+                                value={followingsPercentage}
+                                onChange={sliderHandleChangeFollowingsPercentage}
+                                step={0.0001}
+                                min={0}
+                                max={100}
+                            />
+                        </Grid>
+                    </Grid>
+                </Box>
             </Grid>
             <Grid item xs={12}>
                 <TextField

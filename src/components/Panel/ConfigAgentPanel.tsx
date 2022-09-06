@@ -11,11 +11,8 @@ export default function ConfigAgentPanel(agentConfig2){
 
     const agentConfig = useContext(agentConfigContext)
 
-    const [stateConfig, setStateConfig] = useState(agentConfig);
-
     console.log("Experiment Config is : ", experimentConfig);
     console.log("AgentConfig in ConfigAgent Panel for new Agent is: ", agentConfig)
-    console.log("State config (AgentConfig) in ConfigAgentPanel for new Agent is: ",stateConfig);
 
 
 
@@ -49,10 +46,9 @@ export default function ConfigAgentPanel(agentConfig2){
     const [configName, setConfigName] = useState(agentConfig.configName)
     const handleChangeConfigName = (event: React.ChangeEvent<HTMLInputElement>) => {
         console.log("Pre config ---> ", agentConfig)
-        console.log("State config --->", stateConfig)
         console.log("Value --> ", event.target.value)
         setConfigName(event.target.value);
-        stateConfig.configName = event.target.value
+        agentConfig.configName = event.target.value
         console.log("ExperimentConfig Now is --------> ", experimentConfig)
 
         //agentConfig.configName = event.target.value;

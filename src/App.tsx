@@ -14,17 +14,18 @@ let agentConfig1 = {
     agentType: "TwitterAgent",
     actions: [
         {
-            name: "read",
-            probability: 0.5,
-            type: "ActionRead" //aqui se hace referencia a la clase del objeto action que se debera instanciar
+            id: 0,
+            actionName: "read",
+            actionProbability: 0.5,
+            actionType: "ActionRead" //aqui se hace referencia a la clase del objeto action que se debera instanciar
         },
         {
-            name: "share",
-            probability: 0.5,
-            type: "ActionShare" //aqui se hace referencia a la clase del objeto action que se debera instanciar}
+            id: 1,
+            actionName: "share",
+            actionProbability: 0.03,
+            actionType: "ActionShare" //aqui se hace referencia a la clase del objeto action que se debera instanciar}
         },
-    ]
-    ,
+    ],
     isSeed: false,
     percentageAgent: 95
 }
@@ -37,14 +38,16 @@ let agentConfig2 = {
     agentType: "TwitterAgent",
     actions: [
         {
-            name: "read",
-            probability: 0.5,
-            type: "ActionRead" //aqui se hace referencia a la clase del objeto action que se debera instanciar
+            id: 0,
+            actionName: "read",
+            actionProbability: 0.5,
+            actionType: "ActionRead" //aqui se hace referencia a la clase del objeto action que se debera instanciar
         },
         {
-            name: "share",
-            probability: 0.03,
-            type: "ActionShare" //aqui se hace referencia a la clase del objeto action que se debera instanciar}
+            id: 1,
+            actionName: "share",
+            actionProbability: 0.03,
+            actionType: "ActionShare" //aqui se hace referencia a la clase del objeto action que se debera instanciar}
         },
     ],
     isSeed: true,

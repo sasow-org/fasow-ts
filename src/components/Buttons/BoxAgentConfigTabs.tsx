@@ -7,9 +7,9 @@ import {Button, Grid, MenuItem, TextField} from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import ActionsPanel from "../Panel/ActionsPanel";
 import ConfigAgentPanel from "../Panel/ConfigAgentPanel";
-import {ExperimentConfigContext} from "../../App";
 import {useContext} from "react";
-import {GenericExperiment} from "../../model/environments/GenericExperiment";
+import {ExperimentConfigContext} from "../../App";
+import {agentConfigContext} from "../Modals/ModalNewAgentConfig";
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -55,9 +55,11 @@ const tabsController = (index: number) => {
     };
 }
 
-export default function BoxAgentConfigTabs(agentConfig) {
+export default function BoxAgentConfigTabs(agentConfig2) {
     //Todo read mode of config and only disable the not ! agent by Config
 
+    const experimentContext = useContext(ExperimentConfigContext);
+    const agentConfig = useContext(agentConfigContext);
     console.log("In Start agent config from prop is: ", agentConfig)
 
     const [auxIndexTab, setAuxIndexTab  ] = React.useState(0);
@@ -65,9 +67,12 @@ export default function BoxAgentConfigTabs(agentConfig) {
         setAuxIndexTab(newValue);
     };
 
-    const handleAddAgentConfig = () => {
+    const handleAddAgentConfig = (e) => {
         console.log("Todo Add New Config.")
+        console.log("agentConfig: ", agentConfig)
+
         //todo handle to add to all configs list.
+        experimentContext.agentsConfigs.push(agentConfig);
     }
 
 

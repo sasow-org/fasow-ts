@@ -17,7 +17,12 @@ const style = {
     transform: 'translate(-50%, -50%)',
     backgroundColor: "whitesmoke",
     border: '2px solid #000',
-    minWidth: "440px",
+    //minWidth: "600px",
+    //maxWidth: "600px",
+    //minHeight: "700px",
+    //maxHeight: "700px",
+    width: "550px",
+    height: "650px",
     boxShadow: 24,
 }
 

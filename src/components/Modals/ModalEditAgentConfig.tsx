@@ -1,7 +1,6 @@
 import React, {useContext, useState} from "react";
-import { Button, Modal} from "@mui/material";
+import {Button, Modal, Typography} from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
-import BoxAgentConfigTabs from "../Buttons/BoxAgentConfigTabs";
 import {ExperimentConfigContext} from "../../App";
 
 
@@ -29,7 +28,9 @@ export default function ModalEditAgentConfig(index) {
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
-                <BoxAgentConfigTabs {...experimentConfig.agentsConfigs[index]} />
+                <Typography>
+                    hola
+                </Typography>
             </Modal>
         </>
     );

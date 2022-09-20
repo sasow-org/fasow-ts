@@ -21,7 +21,7 @@ export default function StartButton() {
 
             let actions : ActionConfigData[] = []
             agentConfig.actions.forEach((action) => {
-                actions.push(new ActionConfigData(action.name, action.probability, action.type))
+                actions.push(new ActionConfigData(action.actionName, action.actionProbability, action.actionType))
             })
             configData.push(
                 new AgentConfigData(

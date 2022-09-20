@@ -15,7 +15,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 
 export default function ActionsPanel(agentConfig2){
     //Load the context
-    const agentConfig = useContext(agentConfigContext)
+    const agentConfig = agentConfig2//useContext(agentConfigContext)
 
     //Initialice actions array
     const actionsArray = ['read', "share"];

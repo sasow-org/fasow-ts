@@ -13,10 +13,11 @@ export default function DataGridAgent() {
     console.log("Printing Agents")
     console.log(agentsConfig)
 
+    //handle the seed agent mode with from switch
     const handleSeedAgent = (event: React.ChangeEvent<HTMLInputElement>, index) => {
-        console.log("agentsConfig[index].isSeed: ", agentsConfig[index].isSeed);
-        console.log("event.target.checked: ", event.target.checked)
-        console.log("Pre change --> ", experimentConfig.seedSize)
+        //console.log("agentsConfig[index].isSeed: ", agentsConfig[index].isSeed);
+        //console.log("event.target.checked: ", event.target.checked)
+        //console.log("Pre change --> ", experimentConfig.seedSize)
 
         agentsConfig[index].isSeed = event.target.checked;
 
@@ -28,7 +29,7 @@ export default function DataGridAgent() {
         })
         experimentConfig.seedSize = newSeedSize;
 
-        console.log("Post change --> ", experimentConfig.seedSize)
+        //console.log("Post change --> ", experimentConfig.seedSize)
     }
 
     const handleChangePercentage = (event, index) => {

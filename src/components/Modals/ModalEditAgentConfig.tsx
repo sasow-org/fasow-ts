@@ -13,7 +13,7 @@ export default function ModalEditAgentConfig(index) {
 
     //const isNewAgent = false;
 
-    console.log("ON Modal agent config is : ", index)
+    //console.log("ON Modal agent config is : ", index)
 
 
 

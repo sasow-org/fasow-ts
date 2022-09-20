@@ -83,7 +83,7 @@ let emptyExperimentConfig = {
 };
 
 
-export const ExperimentConfigContext = createContext(emptyExperimentConfig);
+export const ExperimentConfigContext = createContext(experimentConfig);
 
 function App() {
 

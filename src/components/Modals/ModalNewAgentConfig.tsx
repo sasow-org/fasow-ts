@@ -77,11 +77,11 @@ const agentDefaultConfig = {
 
 export const agentConfigContext = createContext(agentDefaultConfig);
 
-export default function ModalNewAgentConfig() {
+export default function ModalNewAgentConfig( updateConfigCallBack ) {
     //Load the contexts
     const experimentContext = useContext(ExperimentConfigContext);
     const agentConfig = useContext(agentConfigContext);
-    console.log("In Start agent config from prop is: ", agentConfig)
+    //console.log("In Start agent config from prop is: ", agentConfig)
 
     //Handle Tabs
     const [auxIndexTab, setAuxIndexTab  ] = React.useState(0);
@@ -94,9 +94,14 @@ export default function ModalNewAgentConfig() {
         console.log("Adding New Agent Config.")
         console.log("The config is: \n", agentConfig)
 
+        //todo verify if all in config its ok, if have any problem mark as red what is
+
         //todo handle to add to all configs list.
         experimentContext.agentsConfigs.push(agentConfig);
         //todo Update the agent configs list.
+        //console.log(updateConfigCallBack)
+        //updateConfigCallBack()
+
         handleClose()
     }
 
@@ -104,8 +109,6 @@ export default function ModalNewAgentConfig() {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-
-    console.log("Agent Config on New Agent Config modal: ", agentConfig)
 
     return (
         <div>

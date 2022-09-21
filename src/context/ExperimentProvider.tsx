@@ -11,14 +11,10 @@ interface Context {
 
 export const ExperimentContext = createContext<Context>(null);
 
-const useReducer;
-
 const ExperimentProvider: FC = ({ children }) => {
   const [experimentConfig, setExperimentConfig] = useState(
     defaultExperimentConfig
   );
-
-  const [state, dispatch] = useReducer();
 
   const providerValue: Context = {
     experimentConfig,

@@ -5,7 +5,6 @@ import {Grid} from "@mui/material";
 import OutputIterationsCard from "./Cards/OutputIterationsCard/OutputIterationsCard";
 import Box from "@mui/material/Box";
 export default function TemplateLayout(){
-
     return (
         <Box mt={2} paddingX={"15px"} maxHeight={"max-content"} height={"max-content"} style={{backgroundColor: "darkgray",
         }}>

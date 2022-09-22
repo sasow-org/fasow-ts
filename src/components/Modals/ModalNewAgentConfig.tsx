@@ -7,23 +7,10 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import ConfigAgentPanel from "../Panel/ConfigAgentPanel";
 import ActionsPanel from "../Panel/ActionsPanel";
-import {ExperimentConfigContext} from "../../App";
+import {useExperimentConfigContext} from "../../context/ExperimentConfigProvider";
+import {useAgentConfigContext} from "../../context/AgentConfigProvider";
+import {AgentReducerTypes} from "../../context/reducer/types/AgentReducerTypes";
 
-const style = {
-    position: 'absolute' as 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    backgroundColor: "whitesmoke",
-    border: '2px solid #000',
-    //minWidth: "600px",
-    //maxWidth: "600px",
-    //minHeight: "700px",
-    //maxHeight: "700px",
-    width: "550px",
-    height: "650px",
-    boxShadow: 24,
-}
 const style2 = {
     position: 'absolute' as 'absolute',
     top: '50%',
@@ -31,7 +18,9 @@ const style2 = {
     transform: 'translate(-50%, -50%)',
     backgroundColor: "whitesmoke",
     border: '2px solid #000',
-    minWidth: "440px",
+    width: "800px",
+    //minWidth: "440px",
+    //maxWidth: "600px",
     boxShadow: 24,
 }
 interface TabPanelProps {
@@ -64,24 +53,16 @@ const tabsController = (index: number) => {
         'aria-controls': `simple-tabpanel-${index}`,
     };
 }
-const agentDefaultConfig = {
-    initialState: 0,
-    configName: "",
-    percentageFollowers: 0,
-    percentageFollowings: 0,
-    agentType: "TwitterAgent",
-    actions: [],
-    isSeed: false,
-    percentageAgent: 0
-}
 
-export const agentConfigContext = createContext(agentDefaultConfig);
 
-export default function ModalNewAgentConfig( updateConfigCallBack ) {
+export default function ModalNewAgentConfig() {
     //Load the contexts
-    const experimentContext = useContext(ExperimentConfigContext);
-    const agentConfig = useContext(agentConfigContext);
-    //console.log("In Start agent config from prop is: ", agentConfig)
+    const {agentConfig, agentDispatch } = useAgentConfigContext();
+
+    console.log(agentConfig)
+    console.log(agentDispatch)
+
+    //const {experimentConfig, experimentDispatch} = useExperimentConfigContext()
 
     //Handle Tabs
     const [auxIndexTab, setAuxIndexTab  ] = React.useState(0);
@@ -91,24 +72,38 @@ export default function ModalNewAgentConfig( updateConfigCallBack ) {
 
     //Handle Add new Agent Config.
     const handleAddAgentConfig = (e) => {
-        console.log("Adding New Agent Config.")
-        console.log("The config is: \n", agentConfig)
+        //1 debes verificar que los datos ingresados sean correctos
+        //2 si es correcto, cierra el modal
+        //3 si no es correcto, informa del error.
+
+        //console.log("Adding New Agent Config.")
+        //console.log("The config is: \n", agentConfig)
 
         //todo verify if all in config its ok, if have any problem mark as red what is
 
         //todo handle to add to all configs list.
-        experimentContext.agentsConfigs.push(agentConfig);
+        //agentsConfigs.push(agentConfig);
         //todo Update the agent configs list.
         //console.log(updateConfigCallBack)
         //updateConfigCallBack()
-
         handleClose()
     }
 
     //Open and Close modal.
     const [open, setOpen] = useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+    const handleOpen = () => {
+        console.log("BEFORE: ",agentConfig)
+        //Al abrir el modal debes hacer dispatch a la funcion para crear una agentConfig auxiliar vacia.
+        agentDispatch({
+            type: AgentReducerTypes.restartConfig
+        })
+        console.log("AFTER: ",agentConfig)
+        setOpen(true)
+    };
+    const handleClose = () => {
+        //Al cerrar el modal debes Agregar la configuracion del agente y resetearla.
+        setOpen(false)
+    };
 
     return (
         <div>
@@ -132,10 +127,10 @@ export default function ModalNewAgentConfig( updateConfigCallBack ) {
                         </Tabs>
                     </Box>
                     <TabPanel value={auxIndexTab} index={0}>
-                        <ConfigAgentPanel {...agentConfig} />
+                        <ConfigAgentPanel />
                     </TabPanel>
                     <TabPanel value={auxIndexTab} index={1}>
-                        <ActionsPanel {...agentConfig}/>
+                        <ActionsPanel />
                     </TabPanel>
                     <Grid item xs={12}>
                         <div style={{

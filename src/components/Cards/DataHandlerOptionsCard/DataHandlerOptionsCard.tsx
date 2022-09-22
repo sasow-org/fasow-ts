@@ -1,21 +1,19 @@
 import { Card, FormControlLabel, Grid, Switch} from "@mui/material";
-import React, {useContext} from "react";
-import {ExperimentConfigContext} from "../../../App";
 import Typography from "@mui/material/Typography";
+import {useExperimentConfigContext} from "../../../context/ExperimentConfigProvider";
+import {ExperimentReducerTypes} from "../../../context/reducer/types/ExperimentReducerTypes";
+import {ChangeEvent} from "react";
 
 export default function DataHandlerOptionsCard() {
 
-    const experimentConfig= useContext(ExperimentConfigContext);
+    const {experimentConfig, dispatch} = useExperimentConfigContext()
 
-    const [checkedEssential, setCheckedEssential] = React.useState(experimentConfig.essentialData);
-
-    const [checkedDetailed, setCheckedDetailed] = React.useState(experimentConfig.detailedData)
-
-    const handleDetailedChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setCheckedDetailed(event.target.checked);
-        experimentConfig.detailedData = event.target.checked;
+    const handleDetailedChange = (event: ChangeEvent<HTMLInputElement>) => {
+        dispatch({
+            type: ExperimentReducerTypes.setDetailedData,
+            value: event.target.checked
+        })
     };
-
 
     return <Card>
         <Grid container spacing={1}>
@@ -25,10 +23,10 @@ export default function DataHandlerOptionsCard() {
                 </Typography>
             </Grid>
             <Grid item xs={6}>
-                <FormControlLabel control={<Switch checked={checkedEssential} />} label="Essential Data" />
+                <FormControlLabel control={<Switch checked={experimentConfig.essentialData} />} label="Essential Data" />
             </Grid>
             <Grid item xs={6}>
-                <FormControlLabel control={<Switch checked={checkedDetailed}  onChange={handleDetailedChange}/>} label="Detailed Data" />
+                <FormControlLabel control={<Switch checked={experimentConfig.detailedData}  onChange={handleDetailedChange}/>} label="Detailed Data" />
             </Grid>
         </Grid>
     </Card>

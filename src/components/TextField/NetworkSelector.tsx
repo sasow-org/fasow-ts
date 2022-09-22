@@ -1,7 +1,8 @@
 import * as React from "react";
 import {TextField} from "@mui/material";
-import {useContext, useState} from "react";
-import {ExperimentConfigContext} from "../../App";
+import {useExperimentConfigContext} from "../../context/ExperimentConfigProvider";
+import {ExperimentReducerTypes} from "../../context/reducer/types/ExperimentReducerTypes";
+import {ChangeEvent} from "react";
 
 const networkOptions = [
     {
@@ -17,13 +18,13 @@ const networkOptions = [
 export default function NetworkSelector() {
 
 
-    const experimentConfig= useContext(ExperimentConfigContext);
+    const {experimentConfig, dispatch} = useExperimentConfigContext()
 
-    const [network, setNetwork] = useState(experimentConfig.experimentType)
-
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setNetwork(event.target.value)
-        experimentConfig.experimentType = event.target.value
+    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+        dispatch({
+            type: ExperimentReducerTypes.setExperimentType,
+            value: event.target.value
+        })
     }
 
     return(
@@ -31,7 +32,7 @@ export default function NetworkSelector() {
             id="outlined-select-currency-native"
             select
             label="Network to Simulate"
-            value={network}
+            value={experimentConfig.experimentType}
             onChange={handleChange}
             SelectProps={{
                 native: true,

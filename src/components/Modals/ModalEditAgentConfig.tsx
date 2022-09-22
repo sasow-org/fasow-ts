@@ -1,12 +1,12 @@
 import React, {useContext, useState} from "react";
 import {Button, Modal, Typography} from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
-import {ExperimentConfigContext} from "../../App";
+import {useExperimentConfigContext} from "../../context/ExperimentConfigProvider";
 
 
 export default function ModalEditAgentConfig(index) {
 
-    const experimentConfig = useContext(ExperimentConfigContext);
+    const {experimentConfig, dispatch} = useExperimentConfigContext()
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);

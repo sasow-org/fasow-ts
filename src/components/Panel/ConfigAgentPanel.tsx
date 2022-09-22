@@ -1,60 +1,16 @@
-import {Card, Grid, MenuItem, Slider, TextField} from "@mui/material";
-import * as React from "react";
-import {useContext, useEffect, useState} from "react";
-import {ExperimentConfigContext} from "../../App";
+import {Grid, MenuItem, Slider, TextField} from "@mui/material";
+import {ChangeEvent} from "react";
 import Box from "@mui/material/Box";
-import {agentConfigContext} from "../Modals/ModalNewAgentConfig";
+import {useAgentConfigContext} from "../../context/AgentConfigProvider";
+import {AgentReducerTypes} from "../../context/reducer/types/AgentReducerTypes";
 
-export default function ConfigAgentPanel(agentConfig2){
+export default function ConfigAgentPanel(){
 
-    const experimentConfig = useContext(ExperimentConfigContext)
-
-    const agentConfig = useContext(agentConfigContext)//agentConfig2//useContext(agentConfigContext)
-
-    //const [agentConfig, setAgentConfig] = useState(agentConfig2);
-
-    //console.log("Experiment Config is : ", experimentConfig);
-    //console.log("AgentConfig in ConfigAgent Panel for new Agent is: ", agentConfig)
-
-
+    const {agentConfig, agentDispatch} = useAgentConfigContext();
 
     //todo to fix hardocing you need to add class of agents on the below array
     const typesArray = ['TwitterAgent', 'FacebookAgent']
-    // Agent Type, remember this is for select the class was need to instantiate.
-    const [selectedAgentType, setSelectedAgentType] = useState(agentConfig.agentType)//todo check this hardcoding
-    //Function to handle the changes in the
-    const handleChangeSelectAgentType = (event: React.ChangeEvent<HTMLInputElement>) => {
-        //console.log("after setting value: \n", agentConfig)
-        setSelectedAgentType(event.target.value)
-        //setStateConfig(stateConfig => ({
-        //    ...stateConfig,
-        //    ...event.target.value
-        //}));
-        //agentConfig.agentType = event.target.value;
-        //const newValue = {"agentType": event.target.value};
-        //setAgentConfig(agentConfig => ({...agentConfig, ...newValue}))
-        //console.log("Before Setting value: \n",agentConfig)
-    }
-
-    // Config Name
-    const [configName, setConfigName] = useState(agentConfig.configName)
-    const handleChangeConfigName = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setConfigName(event.target.value);
-        //const newValue = {"configName": event.target.value};
-        //setAgentConfig(agentConfig => ({...agentConfig, ...newValue}))
-    }
-
-    // Initial State
-    const [initialState, setInitialState] = useState(agentConfig.initialState)
-    const handleChangeInitialState = (event: React.ChangeEvent<HTMLInputElement>) => {
-        //Todo esta parte se puede mejorar mostrando el nombre de la variable de estado, una cosa asi.
-        setInitialState(Number.parseInt(event.target.value));
-        //const newValue = {"initialState": Number.parseInt(event.target.value)};
-        //setAgentConfig(agentConfig => ({...agentConfig, ...newValue}))
-        //todo resolver el problema de no introducir valores equivocados.
-    }
-
-    // Followers Percentage
+    //function to handle the max and min value in percentages
     const evaluateValue = (newValue) => {
         if(newValue < 0.001 && newValue > 0 ){
             return 0.001;
@@ -63,33 +19,64 @@ export default function ConfigAgentPanel(agentConfig2){
         }
         return newValue;
     }
-    const [followersPercentage, setFollowersPercentage] = useState(agentConfig.percentageFollowers);
+
+    // Agent Type, remember this is for select the class was need to instantiate. //todo check this hardcoding
+    //Function to handle the changes in the
+    const handleChangeSelectAgentType = (event: ChangeEvent<HTMLInputElement>) => {
+        agentDispatch({
+            type: AgentReducerTypes.setAgentType,
+            value: event.target.value
+        })
+    }
+
+    // Config Name
+    const handleChangeConfigName = (event: ChangeEvent<HTMLInputElement>) => {
+        agentDispatch({
+            type: AgentReducerTypes.setConfigName,
+            value: event.target.value
+        })
+    }
+
+    // Initial State
+    const handleChangeInitialState = (event: ChangeEvent<HTMLInputElement>) => {
+        //Todo esta parte se puede mejorar mostrando el nombre de la variable de estado, una cosa asi.
+        agentDispatch({
+            type: AgentReducerTypes.setInitialState,
+            value: event.target.value
+        })
+        //todo resolver el problema de no introducir valores equivocados.
+    }
+
+    // Followers Percentage
     const sliderHandleChangeFollowersPercentage = (event: Event, auxValue: number | number[]) => {
         const newValue : number = evaluateValue(auxValue);
-        setFollowersPercentage(newValue as number)
-        //const newValue2 = {"percentageFollowers": newValue as number};
-        //setAgentConfig(agentConfig => ({...agentConfig, ...newValue2}))
-        //agentConfig.percentageFollowers = newValue as number;
+        agentDispatch({
+            type: AgentReducerTypes.setPercentageFollowers,
+            value: newValue
+        })
     }
-    const handleChangeFollowersPercentage = (event) => {
+    const handleChangeFollowersPercentage = (event: ChangeEvent<HTMLInputElement>) => {
         let newValue : number = evaluateValue(parseFloat(event.target.value));
-        setFollowersPercentage(newValue);
-        //const newValue2 = {"percentageFollowers": newValue};
-        //setAgentConfig(agentConfig => ({...agentConfig, ...newValue2}))
+        agentDispatch({
+            type: AgentReducerTypes.setPercentageFollowers,
+            value: newValue
+        })
     }
 
     // Followings Percentage
-    const [followingsPercentage, setFollowingsPercentage] = useState(agentConfig.percentageFollowings);
-    const sliderHandleChangeFollowingsPercentage = (event: Event, newValue: number | number[]) => {
-        setFollowingsPercentage(newValue as number);
-        //const newValue2 = {"percentageFollowings": newValue as number};
-        //setAgentConfig(agentConfig => ({...agentConfig, ...newValue2}))
+    const sliderHandleChangeFollowingsPercentage = (event: Event, auxValue: number | number[]) => {
+        const newValue : number = evaluateValue(auxValue);
+        agentDispatch({
+            type: AgentReducerTypes.setPercentageFollowings,
+            value: newValue as number
+        })
     }
-    const handleChangeFollowingsPercentage = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChangeFollowingsPercentage = (event: ChangeEvent<HTMLInputElement>) => {
         const newValue : number = evaluateValue(parseFloat(event.target.value));
-        setFollowingsPercentage(newValue)
-        //const newValue2 = {"percentageFollowings": newValue};
-        //setAgentConfig(agentConfig => ({...agentConfig, ...newValue2}))
+        agentDispatch({
+            type: AgentReducerTypes.setPercentageFollowings,
+            value: newValue
+        })
     }
 
     return (
@@ -99,7 +86,7 @@ export default function ConfigAgentPanel(agentConfig2){
                     fullWidth
                     required
                     label="Config Name"
-                    value={configName}
+                    value={agentConfig.configName}
                     onChange={handleChangeConfigName}
                     variant={"outlined"}
                 />
@@ -109,7 +96,7 @@ export default function ConfigAgentPanel(agentConfig2){
                     fullWidth
                     required
                     label="Initial State"
-                    value={initialState}
+                    value={agentConfig.initialState}
                     onChange={handleChangeInitialState}
                     variant={"outlined"}
                     type={"number"}
@@ -123,7 +110,7 @@ export default function ConfigAgentPanel(agentConfig2){
                                 fullWidth
                                 required
                                 label="Followers Percentage"
-                                value={followersPercentage}
+                                value={agentConfig.percentageFollowers}
                                 variant={"outlined"}
                                 onChange={handleChangeFollowersPercentage}
                                 type={"number"}
@@ -131,7 +118,7 @@ export default function ConfigAgentPanel(agentConfig2){
                         </Grid>
                         <Grid item xs={7}>
                             <Slider
-                                value={followersPercentage}
+                                value={agentConfig.percentageFollowers}
                                 onChange={sliderHandleChangeFollowersPercentage}
                                 step={0.0001}
                                 min={0}
@@ -149,7 +136,7 @@ export default function ConfigAgentPanel(agentConfig2){
                                 fullWidth
                                 required
                                 label="Followings Percentage"
-                                value={followingsPercentage}
+                                value={agentConfig.percentageFollowings}
                                 onChange={handleChangeFollowingsPercentage}
                                 variant={"outlined"}
                                 type={"number"}
@@ -157,7 +144,7 @@ export default function ConfigAgentPanel(agentConfig2){
                         </Grid>
                         <Grid item xs={7}>
                             <Slider
-                                value={followingsPercentage}
+                                value={agentConfig.percentageFollowings}
                                 onChange={sliderHandleChangeFollowingsPercentage}
                                 step={0.0001}
                                 min={0}
@@ -173,7 +160,7 @@ export default function ConfigAgentPanel(agentConfig2){
                     id="outlined-select-currency"
                     select
                     label="Agent Type"
-                    value={selectedAgentType}
+                    value={agentConfig.agentType}
                     onChange={handleChangeSelectAgentType}
                     variant={"outlined"}
                 >

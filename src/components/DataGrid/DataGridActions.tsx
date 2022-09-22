@@ -1,50 +1,14 @@
-import {Button, Grid, MenuItem, Slider, TextField} from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
-import {ChangeEvent, useState} from "react";
-import {
-    DataGrid,
-    GridColDef,
-    GridRenderCellParams,
-    useGridApiContext
-} from "@mui/x-data-grid";
+import {DataGrid, GridColDef, GridRenderCellParams, useGridApiContext} from "@mui/x-data-grid";
+import {AgentReducerTypes} from "../../context/reducer/types/AgentReducerTypes";
+import {Button, Grid, Slider, TextField} from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import {useAgentConfigContext} from "../../context/AgentConfigProvider";
-import {AgentReducerTypes} from "../../context/reducer/types/AgentReducerTypes";
-import DataGridActions from "../DataGrid/DataGridActions";
+import {useState} from "react";
 
-//Initialice actions array //TODO FIX THIS HARDCODING
-const actionsArray = ['read', "share"];
-
-export default function ActionsPanel(){
-
+export default function DataGridActions() {
     //Load the context
     const {agentConfig, agentDispatch} = useAgentConfigContext();
 
-    //Initialize state to select action Input
-    const [selectedAction, setSelectedAction] = useState("read")
-    //Handle change on select action
-    const handleChangeSelectAction = (event: ChangeEvent<HTMLInputElement>) => {
-        setSelectedAction(event.target.value);
-    }
-
-    //Return an action by the selected action value //todo check this other hardcoding ....
-    const getAction = (i) => {
-        if(selectedAction === "read"){
-            return {id: i, actionName: "read", actionProbability: 0, actionType: "ActionRead"}
-        }else{
-            return {id: i, actionName: "share", actionProbability: 0, actionType: "ActionShare"}
-        }
-    }
-
-    //Handle the event of click on add action button, and obviusly add the action to the rows.
-    const onClickAddAction = () => {
-        agentDispatch({
-            type: AgentReducerTypes.addAction,
-            payload: getAction(agentConfig.actions.length)
-        })
-    }
-
-    const [rows, setRows] = useState(agentConfig.actions);
     //Handle visualization and edit actionProbability
     const ActionProbabilityEditor = (cellParam: GridRenderCellParams) => {
         const apiRef = useGridApiContext();
@@ -143,39 +107,18 @@ export default function ActionsPanel(){
             },
         },
     ];
-    return(
-        <Grid container spacing={1} sx={{margin: "5px"}}>
-            <Grid item xs={6}>
-                <TextField
-                    fullWidth
-                    select
-                    label="Action"
-                    value={selectedAction}
-                    onChange={handleChangeSelectAction}
-                >
-                    {actionsArray.map((option, i) => (
-                        <MenuItem key={i} value={option}>
-                            {option}
-                        </MenuItem>
-                    ))}
-                </TextField>
-            </Grid>
-            <Grid item xs={6}>
-                <Button onClick={onClickAddAction} variant="contained">
-                    <AddIcon/>
-                </Button>
-            </Grid>
-            <Grid item xs={12}>
-                <div style={{ height: 400, width: '100%' }}>
-                    <DataGrid
-                        rows={agentConfig.actions}
-                        columns={columns}
-                        pageSize={5}
-                        rowsPerPageOptions={[5]}
-                        experimentalFeatures={{newEditingApi: true}}
-                    />
-                </div>
-            </Grid>
-        </Grid>
+
+    //const [rows, setRows] = useState(agentConfig.actions);
+
+    return (
+        <div style={{ height: 400, width: '100%' }}>
+            <DataGrid
+                rows={agentConfig.actions}
+                columns={columns}
+                pageSize={5}
+                rowsPerPageOptions={[5]}
+                experimentalFeatures={{newEditingApi: true}}
+            />
+        </div>
     );
 }

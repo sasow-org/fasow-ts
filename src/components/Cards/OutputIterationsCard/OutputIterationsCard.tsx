@@ -3,10 +3,6 @@ import Typography from "@mui/material/Typography";
 import DataGridOutput from "../../DataGrid/DataGridOutput";
 
 export default function OutputIterationsCard() {
-
-    const rows = [
-    ];
-
     return(
         <Card>
             <Typography>

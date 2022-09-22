@@ -1,51 +1,50 @@
 import {Card, Grid, TextField} from "@mui/material";
-import React, {useContext, useState} from "react";
-import NetworkSelector from "../../TextField/NetworkSelector";
-import {ExperimentConfigContext} from "../../../App";
-import DataHandlerOptionsCard from "../DataHandlerOptionsCard/DataHandlerOptionsCard";
 import Typography from "@mui/material/Typography";
+import {useExperimentConfigContext} from "../../../context/ExperimentConfigProvider";
+import {ExperimentReducerTypes} from "../../../context/reducer/types/ExperimentReducerTypes";
+import {ChangeEvent} from "react";
+import DataHandlerOptionsCard from "../DataHandlerOptionsCard/DataHandlerOptionsCard";
+import NetworkSelector from "../../TextField/NetworkSelector";
 
 
 export default function ExperimentInputCard() {
 
-    const experimentConfig= useContext(ExperimentConfigContext);
+    const {experimentConfig, dispatch} = useExperimentConfigContext()
 
-
-    const [experimentName, setExperimentName] = useState(experimentConfig.experimentName);
-    const [repetitions, setRepetitions] = useState(experimentConfig.repetitions);
-    const [networkSize, setNetworkSize] = useState(experimentConfig.networkSize);
-    const [periods, setPeriods] = useState(experimentConfig.periods);
-    const [description, setDescription] = React.useState(experimentConfig.description);
-
-    //todo handle change experiment name
-    const handleExperimentNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setExperimentName(event.target.value);
-        experimentConfig.experimentName = event.target.value
+    const handleExperimentNameChange = (event: ChangeEvent<HTMLInputElement>) => {
+        dispatch({
+            type: ExperimentReducerTypes.setExperimentName,
+            value: event.target.value
+        })
     };
 
-    const handleRepetitionsChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        console.log("Pre Repetitions: ", experimentConfig)
-        setRepetitions(parseInt(event.target.value))
-        experimentConfig.repetitions = parseInt(event.target.value)
-        console.log("Post Repetitions: ", experimentConfig)
+    const handleRepetitionsChange = (event: ChangeEvent<HTMLInputElement>) => {
+        dispatch({
+            type: ExperimentReducerTypes.setRepetitions,
+            value: event.target.value
+        })
     };
 
-    const handleNetworkSizeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setNetworkSize(parseInt(event.target.value))
-        experimentConfig.networkSize = parseInt(event.target.value);
+    const handleNetworkSizeChange = (event: ChangeEvent<HTMLInputElement>) => {
+        dispatch({
+            type: ExperimentReducerTypes.setNetworkSize,
+            value: event.target.value
+        })
     };
 
-    const handlePeriodsChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setPeriods(parseInt(event.target.value))
-        experimentConfig.periods = parseInt(event.target.value);
+    const handlePeriodsChange = (event: ChangeEvent<HTMLInputElement>) => {
+        dispatch({
+            type: ExperimentReducerTypes.setPeriods,
+            value: event.target.value
+        })
     };
 
-    const handleDescriptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setDescription(event.target.value)
-        experimentConfig.description = event.target.value
+    const handleDescriptionChange = (event: ChangeEvent<HTMLInputElement>) => {
+        dispatch({
+            type: ExperimentReducerTypes.setDescription,
+            value: event.target.value
+        })
     };
-
-
 
 
 
@@ -70,7 +69,7 @@ export default function ExperimentInputCard() {
                     fullWidth
                     required
                     label="Experiment Name"
-                    value={experimentName}
+                    value={experimentConfig.experimentName}
                     onChange={handleExperimentNameChange}
                 />
             </Grid>
@@ -79,7 +78,7 @@ export default function ExperimentInputCard() {
                     fullWidth
                     required
                     label="Repetitions"
-                    value={repetitions}
+                    value={experimentConfig.repetitions}
                     onChange={handleRepetitionsChange}
                 />
             </Grid>
@@ -88,7 +87,7 @@ export default function ExperimentInputCard() {
                     fullWidth
                     required
                     label="Network Size"
-                    value={networkSize}
+                    value={experimentConfig.networkSize}
                     onChange={handleNetworkSizeChange}
                 />
             </Grid>
@@ -97,18 +96,17 @@ export default function ExperimentInputCard() {
                     fullWidth
                     required
                     label="Periods"
-                    value={periods}
+                    value={experimentConfig.periods}
                     onChange={handlePeriodsChange}
                 />
             </Grid>
             <Grid item xs={12}>
                 <TextField
                     fullWidth
-                    id=""
                     label="Description"
                     multiline
                     maxRows={4}
-                    value={description}
+                    value={experimentConfig.description}
                     onChange={handleDescriptionChange}
                 />
             </Grid>

@@ -7,10 +7,10 @@ const ExperimentConfigContext = createContext(undefined);
 export const useExperimentConfigContext = () => useContext(ExperimentConfigContext);
 
 const ExperimentConfigProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(ExperimentReducer, initialExperimentConfigState);
+  const [state, experimentDispatch] = useReducer(ExperimentReducer, initialExperimentConfigState);
 
   return (
-      <ExperimentConfigContext.Provider value={ { experimentConfig: state, dispatch } }>
+      <ExperimentConfigContext.Provider value={ { experimentConfig: state, experimentDispatch: experimentDispatch } }>
         {children}
       </ExperimentConfigContext.Provider>
   );

@@ -6,10 +6,10 @@ import {ChangeEvent} from "react";
 
 export default function DataHandlerOptionsCard() {
 
-    const {experimentConfig, dispatch} = useExperimentConfigContext()
+    const {experimentConfig, experimentDispatch} = useExperimentConfigContext()
 
     const handleDetailedChange = (event: ChangeEvent<HTMLInputElement>) => {
-        dispatch({
+        experimentDispatch({
             type: ExperimentReducerTypes.setDetailedData,
             value: event.target.checked
         })

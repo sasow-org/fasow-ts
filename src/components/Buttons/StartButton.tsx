@@ -8,7 +8,7 @@ import {useExperimentConfigContext} from "../../context/ExperimentConfigProvider
 
 export default function StartButton() {
 
-    const {experimentConfig, dispatch} = useExperimentConfigContext()
+    const {experimentConfig, experimentDispatch} = useExperimentConfigContext()
 
     //console.log("Context is --> ", experimentConfig)
 

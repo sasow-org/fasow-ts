@@ -9,38 +9,38 @@ import NetworkSelector from "../../TextField/NetworkSelector";
 
 export default function ExperimentInputCard() {
 
-    const {experimentConfig, dispatch} = useExperimentConfigContext()
+    const {experimentConfig, experimentDispatch} = useExperimentConfigContext()
 
     const handleExperimentNameChange = (event: ChangeEvent<HTMLInputElement>) => {
-        dispatch({
+        experimentDispatch({
             type: ExperimentReducerTypes.setExperimentName,
             value: event.target.value
         })
     };
 
     const handleRepetitionsChange = (event: ChangeEvent<HTMLInputElement>) => {
-        dispatch({
+        experimentDispatch({
             type: ExperimentReducerTypes.setRepetitions,
             value: event.target.value
         })
     };
 
     const handleNetworkSizeChange = (event: ChangeEvent<HTMLInputElement>) => {
-        dispatch({
+        experimentDispatch({
             type: ExperimentReducerTypes.setNetworkSize,
             value: event.target.value
         })
     };
 
     const handlePeriodsChange = (event: ChangeEvent<HTMLInputElement>) => {
-        dispatch({
+        experimentDispatch({
             type: ExperimentReducerTypes.setPeriods,
             value: event.target.value
         })
     };
 
     const handleDescriptionChange = (event: ChangeEvent<HTMLInputElement>) => {
-        dispatch({
+        experimentDispatch({
             type: ExperimentReducerTypes.setDescription,
             value: event.target.value
         })

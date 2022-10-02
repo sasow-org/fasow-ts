@@ -18,10 +18,10 @@ const networkOptions = [
 export default function NetworkSelector() {
 
 
-    const {experimentConfig, dispatch} = useExperimentConfigContext()
+    const {experimentConfig, experimentDispatch} = useExperimentConfigContext()
 
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-        dispatch({
+        experimentDispatch({
             type: ExperimentReducerTypes.setExperimentType,
             value: event.target.value
         })

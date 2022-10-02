@@ -10,6 +10,7 @@ import ActionsPanel from "../Panel/ActionsPanel";
 import {useExperimentConfigContext} from "../../context/ExperimentConfigProvider";
 import {useAgentConfigContext} from "../../context/AgentConfigProvider";
 import {AgentReducerTypes} from "../../context/reducer/types/AgentReducerTypes";
+import {ExperimentReducerTypes} from "../../context/reducer/types/ExperimentReducerTypes";
 
 const style2 = {
     position: 'absolute' as 'absolute',
@@ -58,9 +59,10 @@ const tabsController = (index: number) => {
 export default function ModalNewAgentConfig() {
     //Load the contexts
     const {agentConfig, agentDispatch } = useAgentConfigContext();
+    const {experimentConfig, experimentDispatch} = useExperimentConfigContext();
 
-    console.log(agentConfig)
-    console.log(agentDispatch)
+    //console.log(agentConfig)
+    //console.log(agentDispatch)
 
     //const {experimentConfig, experimentDispatch} = useExperimentConfigContext()
 
@@ -84,6 +86,10 @@ export default function ModalNewAgentConfig() {
         //todo handle to add to all configs list.
         //agentsConfigs.push(agentConfig);
         //todo Update the agent configs list.
+        experimentDispatch({
+            type: ExperimentReducerTypes.addAgentConfig,
+            payload: agentConfig
+        })
         //console.log(updateConfigCallBack)
         //updateConfigCallBack()
         handleClose()
@@ -92,12 +98,12 @@ export default function ModalNewAgentConfig() {
     //Open and Close modal.
     const [open, setOpen] = useState(false);
     const handleOpen = () => {
-        console.log("BEFORE: ",agentConfig)
+        //console.log("BEFORE: ",agentConfig)
         //Al abrir el modal debes hacer dispatch a la funcion para crear una agentConfig auxiliar vacia.
         agentDispatch({
             type: AgentReducerTypes.restartConfig
         })
-        console.log("AFTER: ",agentConfig)
+        //console.log("AFTER: ",agentConfig)
         setOpen(true)
     };
     const handleClose = () => {

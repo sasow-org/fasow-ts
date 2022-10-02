@@ -8,7 +8,7 @@ import {useState} from "react";
 
 
 export default function DataGridAgent() {
-    const {experimentConfig, dispatch} = useExperimentConfigContext()
+    const {experimentConfig, experimentDispatch} = useExperimentConfigContext()
 
     console.log("Printing Agents")
     console.log(experimentConfig.agentsConfigs)

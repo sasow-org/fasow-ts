@@ -6,7 +6,7 @@ import {useExperimentConfigContext} from "../../context/ExperimentConfigProvider
 
 export default function ModalEditAgentConfig(index) {
 
-    const {experimentConfig, dispatch} = useExperimentConfigContext()
+    const {experimentConfig, experimentDispatch} = useExperimentConfigContext()
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);

@@ -74,6 +74,7 @@ export const initialExperimentConfigState = {
 }
 
 export const initialAgentConfigState = {
+  id: 0 as number,
   initialState: 0 as number,
   configName: "" as string,
   percentageFollowers: 0 as number,
@@ -87,6 +88,7 @@ export const initialAgentConfigState = {
 
 /* Config Interfaces */
 interface AgentConfigInterface {
+  id: number;
   initialState: number;
   configName: string;
   percentageFollowers: number;

@@ -1,4 +1,5 @@
 export const AgentReducerTypes = {
+    setId: 'setId',
     setInitialState: 'setInitialState',
     setConfigName: 'setConfigName',
     setPercentageFollowers: 'setPercentageFollowers',

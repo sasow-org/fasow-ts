@@ -1,4 +1,4 @@
-import React, {createContext, useContext, useState} from "react";
+import React, {useState} from "react";
 import {Button, Grid, Modal} from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 import Box from "@mui/material/Box";
@@ -11,24 +11,9 @@ import {useExperimentConfigContext} from "../../context/ExperimentConfigProvider
 import {useAgentConfigContext} from "../../context/AgentConfigProvider";
 import {AgentReducerTypes} from "../../context/reducer/types/AgentReducerTypes";
 import {ExperimentReducerTypes} from "../../context/reducer/types/ExperimentReducerTypes";
+import {styleModalAgentConfig, TabPanelProps} from "./ModalEditAgentConfig";
 
-const style2 = {
-    position: 'absolute' as 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    backgroundColor: "whitesmoke",
-    border: '2px solid #000',
-    width: "800px",
-    //minWidth: "440px",
-    //maxWidth: "600px",
-    boxShadow: 24,
-}
-interface TabPanelProps {
-    children?: React.ReactNode;
-    index: number;
-    value: number;
-};
+
 const TabPanel = (props: TabPanelProps) => {
     const { children, value, index, ...other } = props;
 
@@ -48,6 +33,7 @@ const TabPanel = (props: TabPanelProps) => {
         </div>
     );
 }
+
 const tabsController = (index: number) => {
     return {
         id: `simple-tab-${index}`,
@@ -61,11 +47,6 @@ export default function ModalNewAgentConfig() {
     const {agentConfig, agentDispatch } = useAgentConfigContext();
     const {experimentConfig, experimentDispatch} = useExperimentConfigContext();
 
-    //console.log(agentConfig)
-    //console.log(agentDispatch)
-
-    //const {experimentConfig, experimentDispatch} = useExperimentConfigContext()
-
     //Handle Tabs
     const [auxIndexTab, setAuxIndexTab  ] = React.useState(0);
     const handleChangeIndexTab = (event: React.SyntheticEvent, newValue: number) => {
@@ -77,21 +58,11 @@ export default function ModalNewAgentConfig() {
         //1 debes verificar que los datos ingresados sean correctos
         //2 si es correcto, cierra el modal
         //3 si no es correcto, informa del error.
-
-        //console.log("Adding New Agent Config.")
-        //console.log("The config is: \n", agentConfig)
-
         //todo verify if all in config its ok, if have any problem mark as red what is
-
-        //todo handle to add to all configs list.
-        //agentsConfigs.push(agentConfig);
-        //todo Update the agent configs list.
         experimentDispatch({
             type: ExperimentReducerTypes.addAgentConfig,
             payload: agentConfig
         })
-        //console.log(updateConfigCallBack)
-        //updateConfigCallBack()
         handleClose()
     }
 
@@ -103,7 +74,10 @@ export default function ModalNewAgentConfig() {
         agentDispatch({
             type: AgentReducerTypes.restartConfig
         })
-        //console.log("AFTER: ",agentConfig)
+        agentDispatch({
+            type: AgentReducerTypes.setId,
+            value: experimentConfig.agentsConfigs.length
+        })
         setOpen(true)
     };
     const handleClose = () => {
@@ -122,7 +96,7 @@ export default function ModalNewAgentConfig() {
                 aria-labelledby="parent-modal-title"
                 aria-describedby="parent-modal-description"
             >
-                <Box sx={style2}>
+                <Box sx={styleModalAgentConfig}>
                     <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                         <Typography variant={'h5'} textAlign={"center"} marginY={'15px'}>
                             Agent Config

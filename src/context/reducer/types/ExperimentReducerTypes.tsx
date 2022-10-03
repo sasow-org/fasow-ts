@@ -12,6 +12,7 @@ export const ExperimentReducerTypes = {
     deleteAgentConfig: 'deleteAgentConfig',
     addAgentConfig: 'addAgentConfig',
     updateAgentConfig: 'updateAgentConfig',
+    setAgentConfigs: 'setAgentConfigs',
     updatePercentageAgentConfig: 'updatePercentageAgentConfig',
     updateSeedAgentConfig: 'updateSeedAgentConfig',
 };

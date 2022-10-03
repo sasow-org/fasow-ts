@@ -8,7 +8,7 @@ import * as React from "react";
 import {DataGrid} from "@mui/x-data-grid";
 
 import AgentConfigProvider from "../../../context/AgentConfigProvider";
-import DataGridAgent from "../../DataGrid/DataGridAgents";
+import DataGridAgents from "../../DataGrid/DataGridAgents";
 
 export default function ConfigurationCard() {
     return <Card style={{
@@ -25,7 +25,7 @@ export default function ConfigurationCard() {
                     <ModalNewAgentConfig/>
                 </Grid>
                 <Grid item xs={12}>
-                    <DataGridAgent/>
+                    <DataGridAgents/>
                 </Grid>
             </Grid>
         </AgentConfigProvider>

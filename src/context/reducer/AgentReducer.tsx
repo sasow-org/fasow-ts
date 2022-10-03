@@ -3,6 +3,12 @@ import {initialAgentConfigState} from "../ExperimentConfigData";
 
 export const AgentReducer = (state, action) => {
     switch (action.type) {
+        case AgentReducerTypes.setId: {
+            return {
+                ...state,
+                id: action.value
+            }
+        }
         case AgentReducerTypes.restartConfig:{
             return initialAgentConfigState;
         }
@@ -57,7 +63,7 @@ export const AgentReducer = (state, action) => {
         case AgentReducerTypes.deleteAction:{
             return {
                 ...state,
-                actions: state.actions.filter((config, i ) => i !== action.value)
+                actions: state.actions.filter((config) => config.id !== action.value)
             }
         }
         case AgentReducerTypes.updateAction: {
@@ -73,12 +79,15 @@ export const AgentReducer = (state, action) => {
             }
         }
         case AgentReducerTypes.updateActionProbability: {
-            console.log("state: ", state.actions)
-            console.log("action: ", action)
+            //console.log("state: ", state.actions)
+            //console.log("action: ", action)
             return {
                 ...state,
-                actions: state.actions.map((config, i) => i === action.index ? {...config, actionProbability: action.value} : config)
+                actions: state.actions.map((config) => config.id === action.index ? {...config, actionProbability: action.value} : config)
             }
+        }
+        case AgentReducerTypes.loadConfig: {
+            return action.payload
         }
         default:{
             return state;

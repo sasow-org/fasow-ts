@@ -68,7 +68,7 @@ export const ExperimentReducer = (state, action) => {
         case ExperimentReducerTypes.deleteAgentConfig:{
             return {
                 ...state,
-                agentsConfigs: state.agentsConfigs.filter((config, i) => i !== action.value)
+                agentsConfigs: state.agentsConfigs.filter((config) => config.id !== action.id)
             }
         }
         case ExperimentReducerTypes.addAgentConfig:{
@@ -76,6 +76,18 @@ export const ExperimentReducer = (state, action) => {
                 ...state,
                 agentsConfigs: [...state.agentsConfigs, action.payload]
             };
+        }
+        case ExperimentReducerTypes.setAgentConfigs:{
+            return {
+                ...state,
+                agentsConfigs: action.payload
+            }
+        }
+        case ExperimentReducerTypes.updateAgentConfig:{
+            return {
+                ...state,
+                agentsConfigs: state.agentsConfigs.map(config => config.id === action.id ? action.payload:config)
+            }
         }
         //TODO update Agent Config
         default:

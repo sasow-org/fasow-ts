@@ -112,16 +112,7 @@ export default function DataGridAgents() {
                         id: cellParam.row.id,
                         payload: agentAux
                     })
-                    updateSeedSize()
-                    //Calculate the new seedSize
-                    //Dispatch setSeedSize
-
-                    //let newSeedSize = 0;
-                    //agentsConfig.forEach((ac) => {
-                    //    if(ac.isSeed){
-                    //        newSeedSize+=ac.percentageAgent*experimentConfig.networkSize/100;
-                    //    }
-                    //})
+                    updateSeedSize();
                 }
 
                 return (

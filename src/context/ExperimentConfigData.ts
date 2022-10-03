@@ -1,5 +1,6 @@
 /* Testing Configs */
 const agentTestConfig1 = {
+  id: 0,
   initialState: 0,
   configName: "agent config 1",
   percentageFollowers: 1,
@@ -23,6 +24,7 @@ const agentTestConfig1 = {
   percentageAgent: 95,
 };
 const agentTestConfig2 = {
+  id: 1,
   initialState: 2,
   configName: "agent config 2",
   percentageFollowers: 1,

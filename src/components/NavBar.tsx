@@ -7,7 +7,7 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import StartButton from "./Buttons/StartButton";
 import {Button, Container, createTheme, Menu, MenuItem, Stack, ThemeProvider} from "@mui/material";
-import {useContext, useState} from "react";
+import {useState} from "react";
 import GitHubIcon from '@mui/icons-material/GitHub';
 
 const pages = ['New Experiment', 'Load Experiment', 'Save Experiment'];

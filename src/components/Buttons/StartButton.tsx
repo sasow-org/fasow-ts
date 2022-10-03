@@ -5,12 +5,11 @@ import {ExperimentConfigData} from "../../model/util/config/data/ExperimentConfi
 import {AgentConfigData} from "../../model/util/config/data/AgentConfigData";
 import {ActionConfigData} from "../../model/util/config/data/ActionConfigData";
 import {useExperimentConfigContext} from "../../context/ExperimentConfigProvider";
+import {ExperimentReducerTypes} from "../../context/reducer/types/ExperimentReducerTypes";
 
 export default function StartButton() {
 
     const {experimentConfig, experimentDispatch} = useExperimentConfigContext()
-
-    //console.log("Context is --> ", experimentConfig)
 
     function getAgentConfigData() : AgentConfigData[] {
         let configData :AgentConfigData[] = []
@@ -39,6 +38,10 @@ export default function StartButton() {
     }
 
     const startExperiment = async () =>  {
+        experimentDispatch({
+            type: ExperimentReducerTypes.useTestExperimentConfig
+        })
+
         const agentConfigsData : AgentConfigData[] = getAgentConfigData()
 
         const experimentConfigData : ExperimentConfigData = new ExperimentConfigData(

@@ -1,5 +1,5 @@
 import {ExperimentReducerTypes} from "./types/ExperimentReducerTypes";
-import {initialExperimentConfigState} from "../ExperimentConfigData";
+import {ExperimentTestConfig, initialExperimentConfigState} from "../ExperimentConfigData";
 
 /*
 Es muy importante que no mutemos el estado
@@ -8,8 +8,6 @@ otra cosa
  */
 
 export const ExperimentReducer = (state, action) => {
-    //console.log("In Reducer state: ",state,"\n");
-    //console.log("In Reducer action: ", action, "\n");
     switch (action.type) {
         case ExperimentReducerTypes.setExperimentName:{
             return {
@@ -60,7 +58,6 @@ export const ExperimentReducer = (state, action) => {
             }
         }
         case ExperimentReducerTypes.resetConfig:{
-            //todo check if works
             return {
                 initialExperimentConfigState
             };
@@ -88,6 +85,9 @@ export const ExperimentReducer = (state, action) => {
                 ...state,
                 agentsConfigs: state.agentsConfigs.map(config => config.id === action.id ? action.payload:config)
             }
+        }
+        case ExperimentReducerTypes.useTestExperimentConfig:{
+            return ExperimentTestConfig;
         }
         //TODO update Agent Config
         default:

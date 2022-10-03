@@ -1,5 +1,5 @@
 import {Grid, MenuItem, Slider, TextField} from "@mui/material";
-import {ChangeEvent, useEffect} from "react";
+import {ChangeEvent} from "react";
 import Box from "@mui/material/Box";
 import {useAgentConfigContext} from "../../context/AgentConfigProvider";
 import {AgentReducerTypes} from "../../context/reducer/types/AgentReducerTypes";

@@ -79,8 +79,6 @@ export const AgentReducer = (state, action) => {
             }
         }
         case AgentReducerTypes.updateActionProbability: {
-            //console.log("state: ", state.actions)
-            //console.log("action: ", action)
             return {
                 ...state,
                 actions: state.actions.map((config) => config.id === action.index ? {...config, actionProbability: action.value} : config)

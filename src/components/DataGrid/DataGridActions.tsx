@@ -3,7 +3,7 @@ import {AgentReducerTypes} from "../../context/reducer/types/AgentReducerTypes";
 import {Button, Grid, Slider, TextField} from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import {useAgentConfigContext} from "../../context/AgentConfigProvider";
-import {useState} from "react";
+import {handlePercentageValueRange} from '../../helper-functions/helper-funcs';
 
 export default function DataGridActions() {
     //Load the context
@@ -14,24 +14,14 @@ export default function DataGridActions() {
         const apiRef = useGridApiContext();
         const {id, value, field} = cellParam
 
-        //Handle new Probability Value
-        const evaluateValue = (newValue) => {
-            if(newValue < 0.001 && newValue > 0 ){
-                return 0.001;
-            }else if(newValue > 100){
-                return 100;
-            }
-            return newValue;
-        }
-
         //Handle slider changes
         const sliderHandleChangeActionProbability = (event: Event, auxValue: number | number[]) => {
-            const newValue : number = evaluateValue(auxValue);//Evalua si el valor esta en un rango aceptable (es un %)
+            const newValue : number = handlePercentageValueRange(auxValue);//Evaluate si el valor esta en un range acceptable (es un %)
             apiRef.current.setEditCellValue({id, field, value: newValue})
         }
         //Handle +-1 changes
         const handleChangeActionProbability = (e) => {
-            const newValue : number = evaluateValue(parseFloat(e.target.value));
+            const newValue : number = handlePercentageValueRange(parseFloat(e.target.value));
             apiRef.current.setEditCellValue({id, field, value: newValue})
             agentDispatch({
                 type: AgentReducerTypes.updateActionProbability,
@@ -107,8 +97,6 @@ export default function DataGridActions() {
             },
         },
     ];
-
-    //const [rows, setRows] = useState(agentConfig.actions);
 
     return (
         <div style={{ height: 400, width: '100%' }}>

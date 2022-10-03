@@ -5,7 +5,6 @@ import {
 import ModalNewAgentConfig from "../../Modals/ModalNewAgentConfig";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
-import {DataGrid} from "@mui/x-data-grid";
 
 import AgentConfigProvider from "../../../context/AgentConfigProvider";
 import DataGridAgents from "../../DataGrid/DataGridAgents";

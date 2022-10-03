@@ -108,6 +108,7 @@ interface ActionConfigInterface {
   actionType: string
 }
 
+/*
 interface ExperimentConfigInterface {
   experimentName: string;
   repetitions: number;
@@ -120,4 +121,5 @@ interface ExperimentConfigInterface {
   detailedData: boolean;
   experimentType: string;
 }
+*/
 /* Config Interfaces */
